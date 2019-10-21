@@ -1,0 +1,79 @@
+class Stack
+  attr_reader :underlying_array
+
+  def initialize
+    @arr = []
+  end
+
+  def push(el)
+    arr.push(el)
+  end
+
+  def pop
+    arr.pop
+  end
+
+  def peek
+    arr.last
+  end
+
+end
+
+class Queue
+  attr_reader :underlying_array
+
+  def initialize
+    @arr = []
+  end
+
+  def enqueue(el)
+    arr.push(el)
+  end
+
+  def dequeue
+    arr.shift
+  end
+
+  def peek
+    arr.first
+  end
+
+end
+
+
+class Map
+  attr_reader :arr
+
+  def initialize
+    @arr = []
+  end
+
+  def set(key, value)
+    idx = arr.index { |pair| pair[0] == key }
+    if idx
+      arr[idx][1] = value
+    else
+      arr.push([key, value])
+    end
+    value
+  end
+
+  def get(key)
+    arr.each { |pair| return pair[1] if pair[0] == key }
+    nil
+  end
+
+  def delete(key)
+    value = get(key)
+    arr.reject! { |pair| pair[0] == key }
+    value
+  end
+
+  def show
+    deep_dup(arr)
+  end
+  
+  def deep_dup(arr)
+    arr.map { |el| el.is_a?(Array) ? deep_dup(el) : el }
+  end  
+end
